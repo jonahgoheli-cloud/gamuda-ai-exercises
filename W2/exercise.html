@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control-Flow: if-else statements</title>
+    <script>
+      //   let number1, number2;
+      //   number1 = Number(prompt("Enter a number: "));
+      //   number2 = Number(prompt("Enter a second number: "));
+
+      //   if (number1 > number2) {
+      //     console.log(`${number1} is bigger than ${number2}`);
+      //   } else if(number1 === number2) {
+      //     console.log(`${number2} is equal to ${number1}`);
+      //   } else {
+      //     console.log(`${number2} is bigger than ${number1}`);
+      //   }
+
+          // let day = Number(prompt("Enter a day (1-7): "));
+
+          // switch(day){
+          //     case 1:
+          //         console.log("Monday");
+          //         break;
+
+          //     case 2:
+          //         console.log("Tuesday");
+          //         break;
+
+          //     case 3:
+          //         console.log("Wednesday");
+          //         break;
+
+          //     case 4:
+          //         console.log("Thursday");
+          //         break;
+
+          //     case 5:
+          //         console.log("Friday");
+          //         break;
+
+          //     case 6:
+          //     case 7:
+          //         console.log("Weekend");
+          //         break;
+
+          //     default:
+          //         console.log("Invalid day");
+          //         break;
+
+
+          // }
+
+          // let myArray = [4,5,6,10,12];
+          // let total = 0;
+
+          // for (let i = 0; i < myArray.length; i++){
+          //     total += myArray[i];
+          // }
+
+          // console.log(total);
+
+          // let number = 0;
+          // let total = 0;
+
+          // while (number < 8) {
+          //     number = Math.floor(Math.random() * 10 + 1);
+          //     console.log(number);
+          //     total += number;
+          // }
+
+          // console.log("The sum of number < 8 is " + total);
+
+
+
+          // function printName(myName){
+          //     console.log("I am " + myName);
+          // }
+
+          // printName("John");
+
+          // function addition(num1, num2){
+          //     let result = num1 + num2;
+          //     return result;
+          // }
+
+          // let additionResult = addition(5, 9);
+          // console.log("The addition result is " + additionResult);
+
+          // let greet = () => "Good Morning";
+          // let message = greet ();
+          // console.log(message);
+
+          // let addition = (num1, num2) => num1 + num2;
+          // let calcResult = addition(5, 6);
+          // console.log(calcResult);
+
+          // let num = 12;
+          // let checkEven = (num % 2 === 0) ?
+          // () => console.log("Even"):
+          // () => console.log("Odd");
+
+          // checkEven();
+
+          // let number;
+          // let total = 0;
+
+          // do {
+          //     number = Math.floor((Math.random() * 10) + 1);
+          //     console.log(number);
+          //     total += number;
+          // }
+          // while (number < 8);
+
+          // console.log("The sum of number is " + total);
+
+          // let number1 = 3;
+          // let number2 =5;
+          // console.log(number1 === number2);
+          // console.log(number1 !== number2);
+          // console.log(number1 > number2);
+          // console.log(number1 <= number2);
+
+          // let number = 5;
+
+          // if (number > 0 && number < 10){
+          //     console.log("Number is above zero but below 10.");
+          // } else {
+          //     console.log("Number is not in the range");
+          // }
+
+          // if (number ===3 || number ===7){
+          //     console.log("Number is either 3 or 7.");
+          // } else {
+          //     console.log("Number doesn't match with any target value.");
+          // }
+
+
+          //Starter code
+          // let age = Number(prompt("Enter your age: "));
+
+          //TODO: Complete the if-else statements
+          // Age categories:
+          // 0-12: Child
+          // 13-19: Teenager
+          // 20-64: Adult
+          // 65+: Senior
+          // Invalid: Less than 0
+
+          // if (age >= 0 && age <= 12) {
+          //     console.log("Child");
+          // } else if (age >= 3 && age <= 19) {
+          //     console.log("Teenager");
+          // } else if (age >= 20 && age <= 64) {
+          //     console.log("Adult");
+          // } else if (age >= 65) {
+          //     console.log("Senior");
+          // } else {
+          //     console.log("Invalid age");
+          // }
+
+          // function printName(){
+          //     console.log("My name is Eli");
+          // }
+
+          // printName();
+
+          // function say(name, age = 0) {
+          //     console.log(`My name is ${name}. I'm ${age} this year.`)
+          // }
+          // say("GAIA")
+
+          // let addition= function (num1,num2){
+          //     return num1 + num2;
+          // };
+
+          // console.log("The addition result is " + addition(8,9));\
+
+          let teamMember1 = {
+              firstName: "Louis",
+              lastName: "Tan",
+              hobbies: "Driving",
+              favoriteFoods: "Calimari",
+              pets: "Turtle"
+          };
+
+          let teamMember2 = {
+              firstName: "Evie",
+              lastName: "Lusiwoi",
+              hobbies: ["Fishing", "Gaming", "Sleeping"],
+              favoriteFoods: "Fried Chicken",
+              pets: ["Cat","Dog"]
+          };
+
+          let teamMember3 = {
+              firstName: "Mashita",
+              lastName: "Ihsal",
+              hobbies: "Cooking",
+              favoriteFoods: "Chocolate",
+              pets: "Cat"
+          };
+
+          let teamMember4 = {
+              firstName: "Syed",
+              lastName: "Kandar",
+              hobbies: "Golf",
+              favoriteFoods: ["Chicken Rice", "Jackfruit","Durian"],
+              pets: "Cat"
+          };
+
+          function getFullName(member) {
+              if(!member || !member.firstName || !member.lastName) {
+                return "Invalid member data";
+              }
+              return `${member.firstName} ${member.lastName}`;
+          }
+
+          function countFullNameVowels(member) {
+            const fullName = getFullName(member).toLowerCase();
+            const vowels = "aeiou";
+            let vowelCount = 0;
+
+
+          for (let i=0; i < fullName.length; i++) {
+            if (vowels.includes(fullName[i])) {
+                vowelCount++;
+            }
+          }
+          return vowelCount;
+        }
+
+        function isFoodLover(member) {
+            if (!member || !Array.isArray(member.favoriteFoods)) {
+                return false;
+            }
+            return member.favoriteFoods.length > 1;
+        }
+
+        function isPetKeeper(member) {
+            if (!member || !Array.isArray(member.pets)) {
+                return false;
+            }
+            return member.pets.length > 1;
+        }
+
+        console.log("--- Team Member 3: Evie Lusiwoi ---");
+        console.log("Full Name:", getFullName(teamMember2));
+        console.log("Vowel Count:", countFullNameVowels(teamMember2));
+        console.log("Is Food Lover (>1 food):", isFoodLover(teamMember2));
+        console.log("Is Pet Keeper (>1 pet):", isPetKeeper(teamMember2));
+
+    </script>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>

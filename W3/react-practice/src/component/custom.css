@@ -1,0 +1,46 @@
+.personal-card{
+    /* src/component/custom.css */
+    
+    text-align:center;
+    background-color: brown;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 400px;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+}
+
+.profile-img{
+    
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.hobby-list{
+    color: greenyellow;
+    padding-left: 50px;
+}
+
+/* Add this to custom.css */
+.card-btn{
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: gold;
+    color: brown;
+    border: none;
+    border-radius: 15px;
+    font-weight: gold;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.card-btn:hover{
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.h2 {
+    text-align: center;
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gamuda AI - Text Translator</title>
+    <style>
+      /* 1. Reset and make the viewport full height */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      /* 2. Center the container inside the body */
+      body {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        background-color: #f9f9f9; /* Optional background color */
+      }
+
+      /* 3. Style your actual container card */
+      .container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Makes it responsive on smaller screens */
+        padding: 30px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-sizing: border-box; /* Prevents padding from bloating the 600px width */
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #0056b3;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #003d80;
+      }
+      .result-box {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-left: 4px solid #0056b3;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Text Translation Tool</h2>
+
+      <div class="form-group">
+        <label for="inputLang">From Language:</label>
+        <input type="text" id="inputLang" value="English" />
+      </div>
+
+      <div class="form-group">
+        <label for="outputLang">To Language:</label>
+        <input type="text" id="outputLang" value="German" />
+      </div>
+
+      <div class="form-group">
+        <label for="textInput">Text to Translate:</label>
+        <textarea id="textInput" rows="4">Hello world!</textarea>
+      </div>
+
+      <button onclick="translateText()">Translate</button>
+
+      <div class="result-box" id="resultBox" style="display: none">
+        <strong>Translation:</strong>
+        <p id="translatedText"></p>
+      </div>
+
+      <script>
+        async function translateText() {
+          // 1. Read input values from the webpage form
+          const inputLang = document.getElementById("inputLang").value;
+          const outputLang = document.getElementById("outputLang").value;
+          const textInput = document.getElementById("textInput").value;
+
+          const resultBox = document.getElementById("resultBox");
+          const translatedText = document.getElementById("translatedText");
+
+          translatedText.innerText = "Translating...";
+          resultBox.style.display = "block";
+
+          try {
+            // 2. Send POST request to FastAPI endpoint /translate
+            const response = await fetch("/translate", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                input_language: inputLang,
+                output_language: outputLang,
+                text_input: textInput,
+              }),
+            });
+
+            const data = await response.json();
+
+            // 3. Display translated result in the browser
+            if (response.ok) {
+              translatedText.innerText = data.translated_text;
+            } else {
+              translatedText.innerText =
+                "Error: " + (data.detail || "Translation failed.");
+            }
+          } catch (error) {
+            translatedText.innerText =
+              "Network Error: Could not connect to backend.";
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Badman</title>
+    <style>
+        body {
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%; /* Fills the page horizontally up to 70% before wrapping */
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        /* Aligns your messages cleanly to the right side */
+        .user-message {
+            align-self: flex-end;
+            background-color: #1f2833;
+            color: #66fcf1;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Aligns Badman's messages cleanly to the left side */
+        .ai-message {
+            align-self: flex-start;
+            background-color: #1a1a24;
+            color: #fff;
+            border: 1px solid #45f3ff;
+            border-bottom-left-radius: 2px;
+        }
+
+        .sender-name {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        #input-container {
+            background: #1f2833;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #0b0c10;
+        }
+
+        input {
+            width: 80%;
+            background: #0b0c10;
+            border: 1px solid #45f3ff;
+            color: #fff;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 24px; /* Pill-shaped layout like mobile apps */
+            outline: none;
+            padding-left: 20px;
+        }
+        
+        input:focus {
+            box-shadow: 0 0 8px #45f3ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chat-container"></div>
+
+    <div id="input-container">
+        <input type="text" id="userInput" placeholder="Type a message to Badman..." autofocus>
+    </div>
+
+    <script>
+        const inputField = document.getElementById('userInput');
+        const chatContainer = document.getElementById('chat-container');
+
+        inputField.addEventListener('keypress', async function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                const message = this.value;
+                this.value = '';
+
+                // Append User Message to the right
+                chatContainer.innerHTML += `
+                    <div class="message user-message">
+                        <span class="sender-name">You</span>
+                        ${message}
+                    </div>`;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                // Create placeholder for Badman on the left
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.className = 'message ai-message';
+                aiMessageDiv.innerHTML = `<span class="sender-name" style="color: #45f3ff;">Real Badman</span>`;
+                chatContainer.appendChild(aiMessageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                try {
+                    const response = await fetch('/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: message })
+                    });
+
+                    if (!response.ok) {
+                        aiMessageDiv.innerHTML += "<span style='color:red;'>[SERVER ERROR]</span>";
+                        return;
+                    }
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let streamBuffer = "";
+
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        
+                        streamBuffer += decoder.decode(value, { stream: true });
+                        const lines = streamBuffer.split('\n');
+                        streamBuffer = lines.pop();
+                        
+                        for (const line of lines) {
+                            if (line.startsWith('data: ')) {
+                                const cleanRawText = line.replace('data: ', '').trim();
+                                if (cleanRawText === "ERROR") {
+                                    aiMessageDiv.innerHTML += "<span style='color:red;'>[AI ERROR]</span>";
+                                    continue;
+                                }
+                                
+                                try {
+                                    const decodedChunk = decodeURIComponent(cleanRawText);
+                                    // Append text inline so it stretches out horizontally across rows
+                                    aiMessageDiv.innerHTML += decodedChunk;
+                                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                                } catch (e) {}
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error("Fetch error:", err);
+                    aiMessageDiv.innerHTML += "<span style='color:red;'>[CONNECTION FAILED]</span>";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

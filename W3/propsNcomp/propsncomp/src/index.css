@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Custom FNAF Animations & Utilities */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8)); }
+  50% { opacity: 0.4; filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.2)); }
+}
+
+.animate-fnaf-pulse {
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+/* Base Page Layout */
+.fnaf-bg {
+  @apply min-h-screen bg-zinc-950 text-zinc-100 font-sans pb-16 px-4 sm:px-6;
+}
+
+.fnaf-container {
+  @apply max-w-5xl mx-auto pt-8;
+}
+
+/* Header & Marquee Styling */
+.fnaf-header {
+  @apply bg-zinc-900 border-2 border-red-800 rounded-2xl p-6 sm:p-8 mb-12 text-center shadow-[0_0_25px_rgba(185,28,28,0.3)] relative overflow-hidden;
+}
+
+.fnaf-title {
+  @apply text-3xl sm:text-5xl font-black text-amber-400 uppercase tracking-widest mb-4;
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.7), 0 0 24px rgba(185, 28, 28, 0.5);
+}
+
+.fnaf-banner-frame {
+  @apply my-6 rounded-xl border-2 border-amber-500/70 overflow-hidden shadow-lg max-h-72;
+}
+
+.fnaf-tagline {
+  @apply text-zinc-300 italic text-base sm:text-lg mb-6 max-w-2xl mx-auto border-l-4 border-red-600 pl-4 text-left;
+}
+
+.fnaf-info-bar {
+  @apply flex flex-wrap justify-center items-center gap-4 text-sm font-bold text-zinc-400 bg-zinc-950/80 py-3 px-6 rounded-lg border border-zinc-800 w-fit mx-auto;
+}
+
+/* Category Section */
+.fnaf-category-title {
+  @apply text-2xl sm:text-3xl font-extrabold text-red-500 uppercase tracking-wider mb-6 pb-2 border-b-2 border-red-900/60 flex items-center gap-3;
+}
+
+.fnaf-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.fnaf-empty-msg {
+  @apply text-zinc-500 italic bg-zinc-900/50 p-4 rounded-lg text-center border border-zinc-800;
+}
+
+/* Menu Item Cards */
+.fnaf-card {
+  @apply bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-md flex flex-col sm:flex-row transition-all duration-300;
+}
+
+.fnaf-card:hover {
+  @apply border-amber-500/60 shadow-[0_0_15px_rgba(245,158,11,0.2)];
+}
+
+.fnaf-card-img-container {
+  @apply sm:w-2/5 h-48 sm:h-auto relative bg-zinc-950 shrink-0;
+}
+
+.fnaf-card-body {
+  @apply p-5 flex-1 flex flex-col justify-between;
+}
+
+.fnaf-item-title {
+  @apply text-xl font-bold text-amber-300 tracking-wide;
+}
+
+.fnaf-price-badge {
+  @apply text-lg font-black text-red-400 bg-red-950/80 border border-red-800/80 px-2.5 py-0.5 rounded-md;
+}
+
+.fnaf-item-desc {
+  @apply text-zinc-400 text-sm mb-4 leading-relaxed;
+}
+
+/* Buttons and Badges */
+.fnaf-btn {
+  @apply w-full py-2.5 px-4 bg-red-700 text-white font-bold tracking-wider uppercase rounded-lg shadow flex items-center justify-center gap-2 transition-all duration-150;
+}
+
+.fnaf-btn:hover {
+  @apply bg-red-600 shadow-[0_0_12px_rgba(220,38,38,0.5)];
+}
+
+.fnaf-btn:active {
+  @apply bg-red-800;
+}
+
+.fnaf-badge-veg {
+  @apply bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-1 rounded text-xs font-semibold;
+}
+
+.fnaf-badge-spicy {
+  @apply bg-red-950 text-red-400 border border-red-800 px-2 py-1 rounded text-xs font-semibold;
+}
